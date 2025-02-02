@@ -1,6 +1,6 @@
 @extends('backend.layout.main')
 
-@section('title', 'Komoditas')
+@section('title', 'Biaya Produksi')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendors/apexcharts/apexcharts.css">
@@ -27,23 +27,27 @@
                 <div class="table-responsive-sm mt-4">
                     <table class="table table-striped table-bordered" id="yajra" width="100%">
                         <tr>
-                            <th>Nama Komoditas</th>
-                            <td>{{ $komoditas->nama }}</td>
+                            <th>Nama Biaya Produksi</th>
+                            <td>{{ $biayaProduksi->biaya_produksi }}</td>
                         </tr>
                         <tr>
                             <th>Slug</th>
-                            <td>{{ $komoditas->slug }}</td>
+                            <td>{{ $biayaProduksi->slug }}</td>
+                        </tr>
+                        <tr>
+                            <th>Bobot</th>
+                            <td>{{ $biayaProduksi->bobot }}</td>
                         </tr>
                         <tr>
                             <th>Deskripsi</th>
-                            <td>{{ $komoditas->deskripsi }}</td>
+                            <td>{{ $biayaProduksi->deskripsi }}</td>
                         </tr>
                     </table>
 
                     <div class="d-flex justify-content-end mt-3">
-                        <a href="{{ route('backend.komoditas.index') }}" class="btn btn-secondary"><i
+                        <a href="{{ route('backend.biaya-produksi.index') }}" class="btn btn-secondary"><i
                                 class="fas fa-arrow-left"></i> Back</a>
-                        <a href="{{ route('backend.komoditas.edit', $komoditas->uuid) }}" class="btn btn-primary"><i
+                        <a href="{{ route('backend.biaya-produksi.edit', $biayaProduksi->uuid) }}" class="btn btn-primary"><i
                                 class="fas fa-edit"></i> Edit</a>
                     </div>
                 </div>
@@ -59,3 +63,4 @@
     <script src={{ asset('assets/backend/js/helper.js') }}></script>
     <script src={{ asset('assets/backend/js/article.js') }}></script>
 @endpush
+

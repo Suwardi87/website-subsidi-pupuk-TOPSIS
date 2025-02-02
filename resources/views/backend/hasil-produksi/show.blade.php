@@ -1,6 +1,6 @@
 @extends('backend.layout.main')
 
-@section('title', 'Musim Tanam')
+@section('title', 'Hasil Produksi')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendors/apexcharts/apexcharts.css">
@@ -27,23 +27,27 @@
                 <div class="table-responsive-sm mt-4">
                     <table class="table table-striped table-bordered" id="yajra" width="100%">
                         <tr>
-                            <th>Nama Komoditas</th>
-                            <td>{{ $musimTanam->nama }}</td>
+                            <th>Hasil Produksi</th>
+                            <td>{{ $hasilProduksi->hasil_produksi }}</td>
+                        </tr>
+                        <tr>
+                            <th>Interval</th>
+                            <td>{{ $hasilProduksi->interval }}</td>
                         </tr>
                         <tr>
                             <th>Slug</th>
-                            <td>{{ $musimTanam->slug }}</td>
+                            <td>{{ $hasilProduksi->slug }}</td>
                         </tr>
                         <tr>
                             <th>Deskripsi</th>
-                            <td>{{ $musimTanam->deskripsi }}</td>
+                            <td>{{ $hasilProduksi->deskripsi }}</td>
                         </tr>
                     </table>
 
                     <div class="d-flex justify-content-end mt-3">
-                        <a href="{{ route('backend.musim-tanam.index') }}" class="btn btn-secondary"><i
+                        <a href="{{ route('backend.hasil-produksi.index') }}" class="btn btn-secondary"><i
                                 class="fas fa-arrow-left"></i> Back</a>
-                        <a href="{{ route('backend.musim-tanam.edit', $musimTanam->uuid) }}" class="btn btn-primary"><i
+                        <a href="{{ route('backend.hasil-produksi.edit', $hasilProduksi->uuid) }}" class="btn btn-primary"><i
                                 class="fas fa-edit"></i> Edit</a>
                     </div>
                 </div>

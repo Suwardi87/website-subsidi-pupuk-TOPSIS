@@ -3,6 +3,7 @@
 namespace App\Http\Services\Backend;
 
 use App\Models\LuasTanah;
+use Illuminate\Support\Str;
 
 class LuasTanahService
 {
@@ -16,11 +17,13 @@ class LuasTanahService
 
     public function create(array $data)
     {
+        $data['slug'] = Str::slug($data['luas_lahan'], '-');
         return LuasTanah::create($data);
     }
 
     public function update(array $data, string $uuid)
     {
+        $data['slug'] = Str::slug($data['luas_lahan'], '-');
         return LuasTanah::where('uuid', $uuid)->update($data);
     }
 

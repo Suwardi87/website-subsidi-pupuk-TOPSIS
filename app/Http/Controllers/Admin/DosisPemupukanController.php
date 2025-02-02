@@ -3,20 +3,14 @@
 
 namespace App\Http\Controllers\admin;
 
-use Illuminate\Http\Request;
-use App\Models\DosisPemupukan;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DosisPemupukanRequest;
-use App\Http\Services\Backend\KomoditasService;
-use App\Http\Services\Backend\MusimTanamService;
 use App\Http\Services\Backend\DosisPemupukanService;
 
 class DosisPemupukanController extends Controller
 {
     public function __construct(
         private DosisPemupukanService $dosisPemupukanService,
-        private KomoditasService $komoditasService,
-        private MusimTanamService $musimTanamService,
     ) {}
     /**
      * Display a listing of the resource.
@@ -33,12 +27,7 @@ class DosisPemupukanController extends Controller
      */
     public function create()
     {
-        $komoditas = $this->komoditasService->select();
-        $musimTanam = $this->musimTanamService->select();
-        return view('backend.dosis-pemupukan.create',[
-            'komoditass' => $komoditas,
-            'musimTanams' => $musimTanam
-        ]);
+        return view('backend.dosis-pemupukan.create');
     }
 
     /**
@@ -47,7 +36,6 @@ class DosisPemupukanController extends Controller
     public function store(DosisPemupukanRequest $request)
     {
         $data = $request->validated();
-
         try {
             $dosisPemupukan = $this->dosisPemupukanService->create($data);
             return response()->json([
@@ -80,9 +68,7 @@ class DosisPemupukanController extends Controller
     public function edit(string $uuid)
     {
         return view('backend.dosis-pemupukan.edit', [
-            'dosisPemupukan' => $this->dosisPemupukanService->getFirstBy('uuid', $uuid, true),
-            'komoditass' => $this->komoditasService->select(),
-            'musimTanams' => $this->musimTanamService->select()
+            'dosisPemupukan' => $this->dosisPemupukanService->getFirstBy('uuid', $uuid),
         ]);
     }
 
@@ -93,7 +79,7 @@ class DosisPemupukanController extends Controller
     {
         $data = $request->validated();
 
-        $getData = $this->dosisPemupukanService->getFirstBy('uuid', $uuid, true);
+        $getData = $this->dosisPemupukanService->getFirstBy('uuid', $uuid);
 
         try {
             $this->dosisPemupukanService->update($data, $getData->uuid);
@@ -109,7 +95,7 @@ class DosisPemupukanController extends Controller
      */
     public function destroy(string $uuid)
     {
-        $dosisPemupukan = $this->dosisPemupukanService->getFirstBy('uuid', $uuid, true);
+        $dosisPemupukan = $this->dosisPemupukanService->getFirstBy('uuid', $uuid);
 
         $this->dosisPemupukanService->delete($uuid);
 

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LuasTanahRequest extends FormRequest
+class ProsesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,12 +19,18 @@ class LuasTanahRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
+            'user_id' => 'required|exists:users,id',
+            // 'luas_tanah_id' => 'required|integer',
+            // 'komoditas_id' => 'required|integer',
+            // 'musim_tanam_id' => 'required|integer',
+            // 'dosis_pemupukan_id' => 'required|integer',
             'luas_lahan' => 'required',
-            'interval' => 'required|string',
-            'bobot' => 'required|numeric|min:1|max:5',
+            'biaya_produksi' => 'required',
+            'hasil_produksi' => 'required',
+            'dosis_pemupukan' => 'required',
         ];
     }
 }

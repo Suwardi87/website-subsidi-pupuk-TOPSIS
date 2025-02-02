@@ -10,8 +10,9 @@ class LuasTanah extends Model
     protected $fillable = [
         'uuid',
         'luas_lahan',
+        'slug',
         'interval',
-        'lokasi_lahan',
+        'bobot',
     ];
 
     public static function booted()

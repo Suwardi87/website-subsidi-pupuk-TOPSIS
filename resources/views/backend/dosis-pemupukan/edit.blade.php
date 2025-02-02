@@ -47,57 +47,76 @@
                 </div>
             </div>
         </div>
+        <div class="card border-0 shadow mb-4">
+    <div class="card-body">
         <form action="#" id="formUpdateDosisPempupukan">
             @csrf
             <input type="hidden" id="id" value="{{ $dosisPemupukan->uuid }}">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="komoditas_id">Komoditas</label>
-                    <select name="komoditas_id" id="komoditas_id"
-                        class="form-select @error('komoditas_id') is-invalid @enderror">
-                        <option value="">-- select category --</option>
-                        @foreach ($komoditass as $komoditas)
-                            <option value="{{ $komoditas->id }}"
-                                {{ old('komoditas_id', $dosisPemupukan->komoditas_id) == $komoditas->id ? 'selected' : '' }}>
-                                {{ $komoditas->nama }}</option>
-                        @endforeach
-                    </select>
 
-                    @error('komoditas_id')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="dosis_pemupukan">Dosis Pemupukan</label>
+                        <select name="dosis_pemupukan" id="dosis_pemupukan" class="form-select @error('dosis_pemupukan') is-invalid @enderror"
+                            onchange="updateSelections(this.value)">
+                            <option value="">-- select luas lahan --</option>
+                            <option value="0 - 500" {{ old('dosis_pemupukan', $dosisPemupukan->dosis_pemupukan) == '0 - 500' ? 'selected' : '' }}>0 - 500</option>
+                            <option value="501 - 1000" {{ old('dosis_pemupukan', $dosisPemupukan->dosis_pemupukan) == '501 - 1000' ? 'selected' : '' }}>501 - 1000</option>
+                            <option value="1001- 1350" {{ old('dosis_pemupukan', $dosisPemupukan->dosis_pemupukan) == '1001- 1350' ? 'selected' : '' }}>1001- 1350</option>
+                            <option value="1351 - 1500" {{ old('dosis_pemupukan', $dosisPemupukan->dosis_pemupukan) == '1351 - 1500' ? 'selected' : '' }}>1351 - 1500</option>
+                            <option value="1501 - 2000" {{ old('dosis_pemupukan', $dosisPemupukan->dosis_pemupukan) == '1501 - 2000' ? 'selected' : '' }}>1501 - 2000</option>
+                        </select>
+                        @error('dosis_pemupukan')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="musim_tanam_id">Musim Tanam</label>
-                    <select name="musim_tanam_id" id="musim_tanam_id"
-                        class="form-select @error('musim_tanam_id') is-invalid @enderror">
-                        <option value="">-- select Musim --</option>
-                        @foreach ($musimTanams as $musimTanam)
-                            <option value="{{ $musimTanam->id }}"
-                                {{ old('musim_tanam_id', $dosisPemupukan->musim_tanam_id) == $musimTanam->id ? 'selected' : '' }}>
-                                {{ $musimTanam->nama }}</option>
-                        @endforeach
-                    </select>
 
-                    @error('musim_tanam_id')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="mb-4">
-                    <label for="dosis_pemupukan">Dosis Pemupukan</label>
-                    <textarea name="dosis_pemupukan" class="form-control @error('dosis_pemupukan') is-invalid @enderror" rows="4">{{ old('dosis_pemupukan', $dosisPemupukan->dosis_pemupukan) }}</textarea>
-                    @error('dosis_pemupukan')
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="interval">Interval</label>
+                        <select name="interval" id="interval"
+                            class="form-select @error('interval') is-invalid @enderror" aria-readonly="readonly">
+                            <option value="">-- select interval --</option>
+                            <option value="Sangat Kecil" {{ old('interval', $dosisPemupukan->interval) == 'Sangat Kecil' ? 'selected' : '' }}>Sangat Kecil</option>
+                            <option value="Kecil" {{ old('interval', $dosisPemupukan->interval) == 'Kecil' ? 'selected' : '' }}>Kecil</option>
+                            <option value="Sedang" {{ old('interval', $dosisPemupukan->interval) == 'Sedang' ? 'selected' : '' }}>Sedang</option>
+                            <option value="Besar" {{ old('interval', $dosisPemupukan->interval) == 'Besar' ? 'selected' : '' }}>Besar</option>
+                            <option value="Sangat Besar" {{ old('interval', $dosisPemupukan->interval) == 'Sangat Besar' ? 'selected' : '' }}>Sangat Besar</option>
+                        </select>
+                        @error('interval')
                         <span class="invalid-feedback">{{ $message }}</span>
-                    @enderror
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="bobot">bobot</label>
+                        <select name="bobot" id="bobot" class="form-select @error('bobot') is-invalid @enderror"
+                            aria-readonly="readonly">
+                            <option value="">-- select bobot --</option>
+                            @for ($i = 1; $i <= 5; $i++)
+                                <option value="{{ $i }}" {{ old('bobot', $dosisPemupukan->bobot) == $i ? 'selected' : '' }}>{{ $i }}</option>
+                            @endfor
+                        </select>
+                        @error('bobot')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="deskripsi">Deskripsi</label>
+                        <textarea name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror"
+                            rows="4">{{ old('deskripsi', $dosisPemupukan->deskripsi) }}</textarea>
+                        @error('deskripsi')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
             </div>
 
@@ -107,7 +126,34 @@
             </div>
         </form>
 
+        <script>
+            function updateSelections(luasLahan) {
+                const bobotSelect = document.getElementById('bobot');
+                const intervalSelect = document.getElementById('interval');
+
+                if (luasLahan === '0 - 500') {
+                    bobotSelect.value = '1';
+                    intervalSelect.value = 'Sangat Kecil';
+                } else if (luasLahan === '501 - 1000') {
+                    bobotSelect.value = '2';
+                    intervalSelect.value = 'Kecil';
+                } else if (luasLahan === '1001- 1350') {
+                    bobotSelect.value = '3';
+                    intervalSelect.value = 'Sedang';
+                } else if (luasLahan === '1351 - 1500') {
+                    bobotSelect.value = '4';
+                    intervalSelect.value = 'Besar';
+                } else if (luasLahan === '1501 - 2000') {
+                    bobotSelect.value = '5';
+                    intervalSelect.value = 'Sangat Besar';
+                } else {
+                    bobotSelect.value = '';
+                    intervalSelect.value = '';
+                }
+            }
+        </script>
     </div>
+</div>
 @endsection
 
 @push('js')

@@ -1,6 +1,6 @@
 @extends('backend.layout.main')
 
-@section('title', 'Luas Lahan')
+@section('title', 'Biaya Produksi')
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendors/apexcharts/apexcharts.css">
@@ -20,7 +20,7 @@
         <div class="mb-3 mb-lg-0">
             <h1 class="h4">@yield('title')</h1>
             <p class="my-3">@yield('title') - Subsidi Pupuk Dinas Pertanian </p>
-            <a href="{{ route('backend.luas-tanah.create') }}"
+            <a href="{{ route('backend.biaya-produksi.create') }}"
                 class="btn btn-outline-primary d-inline-flex my-2 align-items-center">
                 <i class="fas fa-plus me-2"></i>
                 Create @yield('title')
@@ -36,35 +36,31 @@
                     <thead>
                         <tr>
                             <th width="1%">No</th>
-                            <th>Luas Lahan (HA)</th>
-                            <th>Interval</th>
-                            <th>Bobot</th>
+                            <th>Biaya Produksi</th>
+                            <th>bobot</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($luasTanahs as $luasTanah)
+                        @foreach ($biayaProduksi as $item)
                             <tr>
-                                <td>{{ ($luasTanahs->currentPage() - 1) * $luasTanahs->perPage() + $loop->iteration }}</td>
-                                <td>{{ $luasTanah->luas_lahan}}</td>
-                                <td>{{ $luasTanah->interval }}</td>
-                                <td>{{ number_format($luasTanah->bobot, 2, ',', '.') }}</td>
+                                <td>{{ ($biayaProduksi->currentPage() - 1) * $biayaProduksi->perPage() + $loop->iteration }}</td>
+                                <td>{{ $item->biaya_produksi }}</td>
+                                <td>{{ $item->bobot }}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="{{ route('backend.luas-tanah.show', $luasTanah->uuid) }}" class="btn btn-sm btn-info">
+                                        <a href="{{ route('backend.biaya-produksi.show', $item->uuid) }}" class="btn btn-sm btn-info">
                                             <i class="fas fa-eye"></i>
                                         </a>
 
-                                       {{-- @if (auth()->user()->role == 'operator') --}}
-                                            <a href="{{ route('backend.luas-tanah.edit', $luasTanah->uuid) }}"
-                                                class="btn btn-sm btn-primary">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
+                                        <a href="{{ route('backend.biaya-produksi.edit', $item->uuid) }}"
+                                            class="btn btn-sm btn-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
 
-                                            <button class="btn btn-danger" onclick="deleteData(this)" data-uuid="{{ $luasTanah->uuid }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        {{-- @endif --}}
+                                        <button class="btn btn-danger" onclick="deleteData(this)" data-uuid="{{ $item->uuid }}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -73,7 +69,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end mt-3">
-                    {{ $luasTanahs->links() }}
+                    {{ $biayaProduksi->links() }}
                 </div>
             </div>
 
@@ -81,17 +77,16 @@
             @include('backend.home.section._footer')
 
         </div>
-
-        @endsection
         @push('js')
         <script src="{{ asset('assets/backend/library/jquery/jquery-3.7.1.min.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         {{-- <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script> --}}
         {{-- <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script> --}}
         <script src={{ asset('assets/backend/js/helper.js') }}></script>
-        <script src={{ asset('assets/backend/js/luas-tanah.js') }}></script>
+        <script src={{ asset('assets/backend/js/biaya-produksi.js') }}></script>
 
         {{-- <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script> --}}
 
         {{-- {!! JsValidator::formRequest('App\Http\Requests\TagRequest', '#formTag') !!} --}}
         @endpush
+

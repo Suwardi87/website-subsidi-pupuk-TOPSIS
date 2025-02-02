@@ -17,7 +17,7 @@
                 <li class="sidebar-title">Menu</li>
 
                 <li class="sidebar-item ">
-                    <a href="{{ route('dashboard') }}" class='sidebar-link'>
+                    <a href="{{ route('admin.index') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
@@ -36,15 +36,15 @@
                             </a>
                         </li>
                         <li class="submenu-item ">
-                            <a href="{{ route('backend.komoditas.index') }}" >
+                            <a href="{{ route('backend.biaya-produksi.index') }}" >
                                 <i class="bi bi-clipboard-data-fill"></i>
-                                <span>Komoditas</span>
+                                <span>Biaya Produksi</span>
                             </a>
                         </li>
                         <li class="submenu-item ">
-                            <a href="{{ route('backend.musim-tanam.index') }}" >
+                            <a href="{{ route('backend.hasil-produksi.index') }}" >
                                 <i class="bi bi-clipboard-data-fill"></i>
-                                <span>Musim Tanam</span>
+                                <span>Hasil Produksi</span>
                             </a>
                         </li>
                         <li class="submenu-item ">
@@ -55,6 +55,21 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="sidebar-item ">
+                    <a href="{{ route('backend.proses.index') }}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Proses TOPSIS</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item ">
+                    <a href="{{ route('admin.index') }}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Cetak</span>
+                    </a>
+                </li>
+
 
                 <li class="sidebar-item  ">
                     <a href="table-datatable.html" class='sidebar-link'>

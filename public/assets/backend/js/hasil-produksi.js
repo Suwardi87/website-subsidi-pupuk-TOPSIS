@@ -1,33 +1,33 @@
 let submit_method;
 
 $(document).ready(function () {
-    MusimTanamTable();
+    HasilProduksiTable();
 });
 
 // form create
-const modalMusimTanam= () => {
+const modalHasilProduksi= () => {
     submit_method = 'create';
-    resetForm('#formMusimTanam');
+    resetForm('#formHasilProduksi');
     resetValidation();
-    $('#formMusimTanam').modal('show');
-    $('.modal-title').html('<i class="fa fa-plus"></i> Create Musim Tanam');
+    $('#formHasilProduksi').modal('show');
+    $('.modal-title').html('<i class="fa fa-plus"></i> Create Hasil Produksi');
     $('.btnSubmit').html('<i class="fa fa-save"></i> Save');
 }
 
 
 // store data
-$('#formMusimTanam').on('submit', function (e) {
+$('#formHasilProduksi').on('submit', function (e) {
     e.preventDefault();
 
     startLoading();
 
-    let url = '/admin/musim-tanam';
+    let url = '/admin/hasil-produksi';
     let method = 'POST';
 
     const inputForm = new FormData(this);
 
     if (submit_method == 'edit') {
-        url = '/admin/musim-tanam/' + $('#id').val();
+        url = '/admin/hasil-produksi/' + $('#id').val();
         inputForm.append('_method', 'PUT');
     }
 
@@ -50,7 +50,7 @@ $('#formMusimTanam').on('submit', function (e) {
                 text: response.message,
             }).then(result => {
                 if (result.isConfirmed) {
-                    window.location.href = '/admin/musim-tanam';
+                    window.location.href = '/admin/hasil-produksi';
                 }
             });
         },
@@ -63,7 +63,7 @@ $('#formMusimTanam').on('submit', function (e) {
 
 
 // update data
-$('#formUpdateMusimTanam').on('submit', function (e) {
+$('#formUpdateHasilProduksi').on('submit', function (e) {
     e.preventDefault();
 
     startLoading();
@@ -73,7 +73,7 @@ $('#formUpdateMusimTanam').on('submit', function (e) {
 
     const inputForm = new FormData(this);
 
-    url = '/admin/musim-tanam/' + $('#id').val();
+    url = '/admin/hasil-produksi/' + $('#id').val();
     inputForm.append('_method', 'PUT');
 
     $.ajax({
@@ -95,7 +95,7 @@ $('#formUpdateMusimTanam').on('submit', function (e) {
                 text: response.message,
             }).then(result => {
                 if (result.isConfirmed) {
-                    window.location.href = '/admin/musim-tanam';
+                    window.location.href = '/admin/hasil-produksi';
                 }
             })
         },
@@ -131,10 +131,10 @@ const deleteData = (e) => {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "DELETE",
-                url: "/admin/musim-tanam/" + id,
+                url: "/admin/hasil-produksi/" + id,
                 dataType: "json",
                 success: function (response) {
-                    window.location.href = '/admin/musim-tanam';
+                    window.location.href = '/admin/hasil-produksi';
                     toastSuccess(response.message);
                 },
                 error: function (response) {

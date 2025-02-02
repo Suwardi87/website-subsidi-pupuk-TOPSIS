@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('dosis_pemupukans', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->foreignId('komoditas_id')->constrained('komoditas');
-            $table->foreignId('musim_tanam_id')->constrained('musim_tanams');
             $table->string('dosis_pemupukan');
+            $table->string('slug');
+            $table->string('interval');
+            $table->float('bobot');
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }

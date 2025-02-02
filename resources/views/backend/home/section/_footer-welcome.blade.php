@@ -5,7 +5,7 @@
         </div>
         <div class="float-end">
             <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-                    href="">{{ Auth::user()->name }}</a></p>
+                href="">Suwardi</a></p>
         </div>
     </div>
 </footer>

@@ -22,9 +22,10 @@ class DosisPemupukanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'komoditas_id' => 'required|exists:komoditas,id',
-            'musim_tanam_id' => 'required|exists:musim_tanams,id',
             'dosis_pemupukan' => 'required|string|min:2',
+            'interval' => 'required|string',
+            'deskripsi' => 'required|string|min:5|max:255',
+            'bobot' => 'required|numeric|min:1|max:5',
         ];
     }
 }

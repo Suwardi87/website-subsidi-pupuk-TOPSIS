@@ -38,14 +38,14 @@ class LuasTanahController extends Controller
         $data = $request->validated();
 
         try {
-            $luasTanah = $this->luasTanahService->create($data);
+            $luasLahan = $this->luasTanahService->create($data);
 
             return response()->json([
-                'message' => 'Data Luas Tanah Berhasil Ditambahkan...'
+                'message' => 'Data Luas Lahan Berhasil Ditambahkan...'
             ]);
         } catch (\Exception $error) {
             return response()->json([
-                'message' => 'Data Luas Tanah Gagal Ditambahkan...' . $error->getMessage()
+                'message' => 'Data Luas Lahan Gagal Ditambahkan...' . $error->getMessage()
             ]);
         }
     }

@@ -28,27 +28,35 @@
         </div>
     </div>
 
-    <div class="table-responsive-sm mt-4">
-        <table class="table table-striped table-bordered" id="yajra" width="100%">
-            <tr>
-                <th>Komoditas</th>
-                <td>{{ $dosisPemupukan->komoditas->nama }}</td>
-            </tr>
-            <tr>
-                <th>Musim Tanam</th>
-                <td>{{ $dosisPemupukan->musimTanam->nama }}</td>
-            </tr>
-            <tr>
-                <th>Dosis Pemupukan</th>
-                <td>{{ $dosisPemupukan->dosis_pemupukan }}</td>
-            </tr>
-        </table>
+    <div class="card border-0 shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive-sm mt-4">
+                <table class="table table-striped table-bordered" id="yajra" width="100%">
+                    <tr>
+                        <th>Dosis Pemupukan</th>
+                        <td>{{ $dosisPemupukan->dosis_pemupukan }}</td>
+                    </tr>
+                    <tr>
+                        <th>Interval</th>
+                        <td>{{ $dosisPemupukan->interval }}</td>
+                    </tr>
+                    <tr>
+                        <th>Bobot</th>
+                        <td>{{ $dosisPemupukan->bobot }}</td>
+                    </tr>
+                    <tr>
+                        <th>Deskripsi</th>
+                        <td>{{ $dosisPemupukan->deskripsi }}</td>
+                    </tr>
+                </table>
 
-        <div class="d-flex justify-content-end mt-3">
-            <a href="{{ route('backend.dosis-pupuk.index') }}" class="btn btn-secondary"><i
-                    class="fas fa-arrow-left"></i> Back</a>
-            <a href="{{ route('backend.dosis-pupuk.edit', $dosisPemupukan->uuid) }}" class="btn btn-primary"><i
-                    class="fas fa-edit"></i> Edit</a>
+                <div class="d-flex justify-content-end mt-3">
+                    <a href="{{ route('backend.dosis-pupuk.index') }}" class="btn btn-secondary"><i
+                            class="fas fa-arrow-left"></i> Back</a>
+                    <a href="{{ route('backend.dosis-pupuk.edit', $dosisPemupukan->uuid) }}" class="btn btn-primary"><i
+                            class="fas fa-edit"></i> Edit</a>
+                </div>
+            </div>
         </div>
     </div>
 

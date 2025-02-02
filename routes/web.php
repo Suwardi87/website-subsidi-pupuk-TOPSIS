@@ -2,15 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\admin\KomoditasController;
+use App\Http\Controllers\admin\ProsesController;
+use App\Http\Controllers\admin\TopsisController;
+use App\Http\Controllers\admin\ProduksiController;
 use App\Http\Controllers\admin\LuasTanahController;
-use App\Http\Controllers\admin\MusimTanamController;
+use App\Http\Controllers\admin\HasilProduksiController;
 use App\Http\Controllers\admin\DosisPemupukanController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -23,9 +24,13 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::get('dashboard',[AdminController::class,'index'])->name('admin.index');
     Route::resource('luas-tanah', LuasTanahController::class)->names('backend.luas-tanah');
-    Route::resource('komoditas', KomoditasController::class)->names('backend.komoditas');
-    Route::resource('musim-tanam', MusimTanamController::class)->names('backend.musim-tanam');
+    Route::resource('biaya-produksi', ProduksiController::class)->names('backend.biaya-produksi');
+    Route::resource('hasil-produksi', HasilProduksiController::class)->names('backend.hasil-produksi');
     Route::resource('dosis-pupuk', DosisPemupukanController::class)->names('backend.dosis-pupuk');
+    Route::resource('proses', ProsesController::class)->names('backend.proses');
+    // Route::delete('/proses/topsis', [ProsesController::class, 'topsis'])->name('backend.proses.topsis');
+    Route::resource('topsis', TopsisController::class)->names('backend.topsis');
+
 });
 
 require __DIR__.'/auth.php';

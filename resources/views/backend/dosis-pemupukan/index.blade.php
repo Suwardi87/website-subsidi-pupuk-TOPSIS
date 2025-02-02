@@ -36,9 +36,9 @@
                     <thead>
                         <tr>
                             <th width="1%">No</th>
-                            <th>Komoditas</th>
-                            <th>Musim Tanam</th>
-                            <th>Dosis Pemupukan</th>
+                            <th>Dosis Pemupupukan</th>
+                            <th>Interval</th>
+                            <th>Bobot</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -46,9 +46,11 @@
                         @foreach ($dosisPemupukans as $item)
                             <tr>
                                 <td>{{ ($dosisPemupukans->currentPage() - 1) * $dosisPemupukans->perPage() + $loop->iteration }}</td>
-                                <td>{{ $item->komoditas->nama }}</td>
-                                <td>{{ $item->musimTanam->nama }}</td>
+                                {{-- <td>{{ $item->komoditas->nama }}</td> --}}
+                                {{-- <td>{{ $item->musimTanam->nama }}</td> --}}
                                 <td>{{ $item->dosis_pemupukan }}</td>
+                                <td>{{ $item->interval }}</td>
+                                <td>{{ number_format($item->bobot, 2, ',', '.') }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('backend.dosis-pupuk.show', $item->uuid) }}" class="btn btn-sm btn-info">

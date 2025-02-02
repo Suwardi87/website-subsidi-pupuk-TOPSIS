@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('luas_tanahs', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->float('luas_lahan');
+            $table->string('luas_lahan');
+            $table->string('slug');
             $table->string('interval');
-            $table->string('lokasi_lahan');
+            $table->float('bobot');
             $table->timestamps();
         });
     }

@@ -2,24 +2,22 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Models\MusimTanam;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MusimTanamRequest;
-use App\Http\Services\Backend\MusimTanamService;
+use App\Http\Requests\HasilProduksiRequest;
+use App\Http\Services\Backend\HasilProduksiService;
 
-class MusimTanamController extends Controller
+class HasilProduksiController extends Controller
 {
     public function __construct(
-        private MusimTanamService $musimTanamService,
+        private HasilProduksiService $hasilProduksiService,
     ) {}
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('backend.musim-tanam.index',[
-            'musimTanams' => $this->musimTanamService->select()
+        return view('backend.hasil-produksi.index',[
+            'hasilProduksis' => $this->hasilProduksiService->select()
         ]);
     }
 
@@ -28,25 +26,25 @@ class MusimTanamController extends Controller
      */
     public function create()
     {
-        return view('backend.musim-tanam.create');
+        return view('backend.hasil-produksi.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(MusimTanamRequest $request)
+    public function store(HasilProduksiRequest $request)
     {
         $data = $request->validated();
 
         try {
-            $musimTanam = $this->musimTanamService->create($data);
+            $hasilProduksi = $this->hasilProduksiService->create($data);
 
             return response()->json([
-                'message' => 'Data Komoditas Berhasil Ditambahkan...'
+                'message' => 'Data Hasil Produksi Berhasil Ditambahkan...'
             ]);
         } catch (\Exception $error) {
             return response()->json([
-                'message' => 'Data Komoditas Gagal Ditambahkan...' . $error->getMessage()
+                'message' => 'Data Hasil Produksi Gagal Ditambahkan...' . $error->getMessage()
             ]);
         }
     }
@@ -57,8 +55,8 @@ class MusimTanamController extends Controller
     public function show(string $uuid)
     {
         try {
-            return view('backend.musim-tanam.show', [
-                'musimTanam' => $this->musimTanamService->getFirstBy('uuid', $uuid)
+            return view('backend.hasil-produksi.show', [
+                'hasilProduksi' => $this->hasilProduksiService->getFirstBy('uuid', $uuid)
             ]);
         } catch (\Exception $err) {
             return response()->json(['message' => $err->getMessage()], 404);
@@ -70,22 +68,22 @@ class MusimTanamController extends Controller
      */
     public function edit(string $uuid)
     {
-        return view('backend.musim-tanam.edit', [
-            'musimTanam' => $this->musimTanamService->getFirstBy('uuid', $uuid)
+        return view('backend.hasil-produksi.edit', [
+            'hasilProduksi' => $this->hasilProduksiService->getFirstBy('uuid', $uuid)
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(MusimTanamRequest $request, string $uuid)
+    public function update(HasilProduksiRequest $request, string $uuid)
     {
         $data = $request->validated();
 
-        $getData = $this->musimTanamService->getFirstBy('uuid', $uuid);
+        $getData = $this->hasilProduksiService->getFirstBy('uuid', $uuid);
 
         try {
-            $this->musimTanamService->update($data, $getData->uuid);
+            $this->hasilProduksiService->update($data, $getData->uuid);
 
             return response()->json(['message' => 'Data Musim Tanam Berhasil Diubah!']);
         } catch (\Exception $err) {
@@ -98,9 +96,9 @@ class MusimTanamController extends Controller
      */
     public function destroy(string $uuid)
     {
-        $dosisPemupukan = $this->musimTanamService->getFirstBy('uuid', $uuid, true);
+        $hasilProduksi = $this->hasilProduksiService->getFirstBy('uuid', $uuid, true);
 
-        $this->musimTanamService->delete($uuid);
+        $this->hasilProduksiService->delete($uuid);
 
         return response()->json(['message' => 'Data Musim Tanam Berhasil Dihapus...']);
 

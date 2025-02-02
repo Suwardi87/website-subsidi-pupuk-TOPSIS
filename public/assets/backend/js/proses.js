@@ -1,33 +1,33 @@
 let submit_method;
 
 $(document).ready(function () {
-    KomoditasTable();
+    ProsesTable();
 });
 
 // form create
-const modalKomoditas= () => {
+const modalProses= () => {
     submit_method = 'create';
-    resetForm('#formKomoditas');
+    resetForm('#formProses');
     resetValidation();
-    $('#formKomoditas').modal('show');
-    $('.modal-title').html('<i class="fa fa-plus"></i> Create Komoditas');
+    $('#formProses').modal('show');
+    $('.modal-title').html('<i class="fa fa-plus"></i> Create Proses');
     $('.btnSubmit').html('<i class="fa fa-save"></i> Save');
 }
 
 
 // store data
-$('#formKomoditas').on('submit', function (e) {
+$('#formProses').on('submit', function (e) {
     e.preventDefault();
 
     startLoading();
 
-    let url = '/admin/komoditas';
+    let url = '/admin/proses';
     let method = 'POST';
 
     const inputForm = new FormData(this);
 
     if (submit_method == 'edit') {
-        url = '/admin/komoditas/' + $('#id').val();
+        url = '/admin/proses/' + $('#id').val();
         inputForm.append('_method', 'PUT');
     }
 
@@ -50,7 +50,7 @@ $('#formKomoditas').on('submit', function (e) {
                 text: response.message,
             }).then(result => {
                 if (result.isConfirmed) {
-                    window.location.href = '/admin/komoditas';
+                    window.location.href = '/admin/proses';
                 }
             });
         },
@@ -63,7 +63,7 @@ $('#formKomoditas').on('submit', function (e) {
 
 
 // update data
-$('#formUpdatekomoditas').on('submit', function (e) {
+$('#formUpdateProses').on('submit', function (e) {
     e.preventDefault();
 
     startLoading();
@@ -73,7 +73,7 @@ $('#formUpdatekomoditas').on('submit', function (e) {
 
     const inputForm = new FormData(this);
 
-    url = '/admin/komoditas/' + $('#id').val();
+    url = '/admin/proses/' + $('#id').val();
     inputForm.append('_method', 'PUT');
 
     $.ajax({
@@ -95,7 +95,7 @@ $('#formUpdatekomoditas').on('submit', function (e) {
                 text: response.message,
             }).then(result => {
                 if (result.isConfirmed) {
-                    window.location.href = '/admin/komoditas';
+                    window.location.href = '/admin/proses';
                 }
             })
         },
@@ -131,10 +131,10 @@ const deleteData = (e) => {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: "DELETE",
-                url: "/admin/komoditas/" + id,
+                url: "/admin/proses/" + id,
                 dataType: "json",
                 success: function (response) {
-                    window.location.href = '/admin/komoditas';
+                    window.location.href = '/admin/proses';
                     toastSuccess(response.message);
                 },
                 error: function (response) {

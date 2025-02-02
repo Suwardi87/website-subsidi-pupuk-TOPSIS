@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Models\Proses;
 use App\Models\Produksi;
@@ -8,7 +8,7 @@ use App\Models\LuasTanah;
 use App\Models\DosisPemupukan;
 use App\Http\Controllers\Controller;
 
-class AdminController extends Controller
+class WelcomeController extends Controller
 {
     public function index()
     {
@@ -17,7 +17,7 @@ class AdminController extends Controller
         $totalLuasTanah = LuasTanah::sum('luas_lahan');
         $maxdosis = DosisPemupukan::max('dosis_pemupukan');
 
-        return view('backend.home.index', compact('petaniCount', 'produksiCount', 'totalLuasTanah', 'maxdosis'));
+        return view('welcome', compact('petaniCount', 'produksiCount', 'totalLuasTanah', 'maxdosis'));
 
     }
 }

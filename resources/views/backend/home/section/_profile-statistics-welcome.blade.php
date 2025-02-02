@@ -4,8 +4,8 @@
 <div class="page-content">
     <section class="row">
         <div class="col-12 col-lg-9">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-                <div>
+            <div class="row">
+                <div class="col-6 col-lg-3 col-md-6">
                     <div class="card">
                         <div class="card-body px-3 py-4-5">
                             <div class="row">
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 </div>
-                <div>
+                <div class="col-6 col-lg-3 col-md-6">
                     <div class="card">
                         <div class="card-body px-3 py-4-5">
                             <div class="row">
@@ -32,15 +32,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h6 class="text-muted font-semibold">Komoditas</h6>
+                                    <h6 class="text-muted font-semibold">Jumlah Komoditas</h6>
                                     {{-- <h6 class="font-extrabold mb-0">{{ $komoditasCount }}</h6> --}}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-7">
+                <div class="col-6 col-lg-3 col-md-6">
                     <div class="card">
                         <div class="card-body px-3 py-4-5">
                             <div class="row">
@@ -50,8 +49,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h6 class="text-muted font-semibold">Dosis Pupuk</h6>
-                                    <h6 class="font-extrabold mb-0">200 kg</h6>
+                                    <h6 class="text-muted font-semibold">Maksimal Dosis Pupuk</h6>
+                                    <h6 class="font-extrabold mb-0"></h6>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +102,7 @@
                         </div>
                         <div class="col-md-8">
                             <h6 class="text-muted font-semibold">Stok Subsidi Pupuk</h6>
-                            <h6 class="font-extrabold mb-0">10000 kg</h6>
+                            <h6 class="font-extrabold mb-0"></h6>
                         </div>
                     </div>
                 </div>

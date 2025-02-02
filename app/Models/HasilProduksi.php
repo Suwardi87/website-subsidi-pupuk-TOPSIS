@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
-class MusimTanam extends Model
+class HasilProduksi extends Model
 {
+    protected $table = "hasil_produksis";
     protected $fillable = [
         'uuid',
-        'nama',
+        'hasil_produksi',
         'slug',
+        'interval',
         'deskripsi',
+        'bobot',
     ];
 
     public static function booted()

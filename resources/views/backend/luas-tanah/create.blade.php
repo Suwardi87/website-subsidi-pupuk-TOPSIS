@@ -53,46 +53,81 @@
             <!-- Input Luas Tanah -->
             <div class="mb-4">
                 <label for="luas_lahan">Luas Tanah</label>
-                <input type="number" name="luas_lahan" class="form-control @error('luas_lahan') is-invalid @enderror"
-                    value="{{ old('luas_lahan', 0) }}">
+                <select name="luas_lahan" id="luas_lahan" class="form-select @error('luas_lahan') is-invalid @enderror"
+                    onchange="updateSelections(this.value)">
+                    <option value="">-- select luas lahan --</option>
+                    <option value="1.0 - 1.2">1.0 - 1.2</option>
+                    <option value="1.3 - 1.5">1.3 - 1.5</option>
+                    <option value="1.6 - 2.0">1.6 - 2.0</option>
+                    <option value="2.1 - 2.5">2.1 - 2.5</option>
+                    <option value="2.1 - 2.5">2.6 - 4.5</option>
+                </select>
                 @error('luas_lahan')
                     <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <!-- Input Interval -->
-                    <div class="mb-3">
-                        <label for="interval">Interval</label>
-                        <input name="interval" type="text" class="form-control @error('interval') is-invalid @enderror"
-                            value="{{ old('interval') }}">
-                        @error('interval')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <!-- Input Lokasi Lahan -->
-                    <div class="mb-4">
-                        <label for="lokasi_lahan">Lokasi Lahan</label>
-                        <select name="lokasi_lahan" class="form-select @error('lokasi_lahan') is-invalid @enderror">
-                            <option value="">-- select lokasi lahan --</option>
-                            <option value="lokasi1" {{ old('lokasi_lahan') == 'lokasi1' ? 'selected' : '' }}>Lokasi 1
-                            </option>
-                            <option value="lokasi2" {{ old('lokasi_lahan') == 'lokasi2' ? 'selected' : '' }}>Lokasi 2
-                            </option>
-                            <option value="lokasi3" {{ old('lokasi_lahan') == 'lokasi3' ? 'selected' : '' }}>Lokasi 3
-                            </option>
-                        </select>
-                        @error('lokasi_lahan')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                        @enderror
-                    </div>
+            <div class="col-md-6">
+                <!-- Input Interval -->
+                <div class="mb-3">
+                    <label for="interval">Interval</label>
+                    <select name="interval" id="interval" class="form-select @error('interval') is-invalid @enderror"
+                        aria-readonly="readonly">
+                        <option value="">-- select interval --</option>
+                        <option value="Sangat Kecil">Sangat Kecil</option>
+                        <option value="Kecil">Kecil</option>
+                        <option value="Sedang">Sedang</option>
+                        <option value="Besar">Besar</option>
+                        <option value="Sangat Besar">Sangat Besar</option>
+                    </select>
+                    @error('interval')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 
+            <div class="col-md-6">
+                <!-- Input Lokasi Lahan -->
+                <div class="mb-4">
+                    <label for="bobot">bobot</label>
+                    <select name="bobot" id="bobot" class="form-select @error('bobot') is-invalid @enderror" aria-readonly="readonly">
+                        <option value="">-- select lokasi lahan --</option>
+                        @for ($i = 1; $i <= 5; $i++)
+                            <option value="{{ $i }}">{{ $i }}</option>
+                        @endfor
+                    </select>
+                    @error('bobot')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+        <script>
+            function updateSelections(luasLahan) {
+                const bobotSelect = document.getElementById('bobot');
+                const intervalSelect = document.getElementById('interval');
+
+                if (luasLahan === '1.0 - 1.2') {
+                    bobotSelect.value = '1';
+                    intervalSelect.value = 'Sangat Kecil';
+                } else if (luasLahan === '1.3 - 1.5') {
+                    bobotSelect.value = '2';
+                    intervalSelect.value = 'Kecil';
+                } else if (luasLahan === '1.6 - 2.0') {
+                    bobotSelect.value = '3';
+                    intervalSelect.value = 'Sedang';
+                } else if (luasLahan === '2.1 - 2.5') {
+                    bobotSelect.value = '4';
+                    intervalSelect.value = 'Besar';
+                } else if (luasLahan === '2.6 - 4.5') {
+                    bobotSelect.value = '5';
+                    intervalSelect.value = 'Sangat Besar';
+                } else {
+                    bobotSelect.value = '';
+                    intervalSelect.value = '';
+                }
+            }
+        </script>
             <!-- Submit Button -->
             <div class="float-end">
                 <button type="submit" class="btn btn-primary btnSubmit">Submit</button>

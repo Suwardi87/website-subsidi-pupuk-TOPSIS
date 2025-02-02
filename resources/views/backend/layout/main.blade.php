@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('assets/backend') }}/css/app.css">
     <link rel="shortcut icon" href="{{ asset('assets/backend') }}/images/favicon.svg" type="image/x-icon">
-    
+
 
     @stack('css')
 </head>
@@ -25,7 +25,11 @@
 <body>
     <div id="app">
 
-        @include('backend.layout.partials._sidebar')
+        @auth
+            @include('backend.layout.partials._sidebar')
+        @else
+            @include('backend.layout.partials._sidebar-welcome')
+        @endauth
 
         @yield('content')
 

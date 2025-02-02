@@ -1,6 +1,6 @@
 @extends('backend.layout.main')
 
-@section('title', 'Komoditas')
+@section('title', 'Hasil Produksi')
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendors/apexcharts/apexcharts.css">
@@ -20,7 +20,7 @@
         <div class="mb-3 mb-lg-0">
             <h1 class="h4">@yield('title')</h1>
             <p class="my-3">@yield('title') - Subsidi Pupuk Dinas Pertanian </p>
-            <a href="{{ route('backend.komoditas.create') }}"
+            <a href="{{ route('backend.hasil-produksi.create') }}"
                 class="btn btn-outline-primary d-inline-flex my-2 align-items-center">
                 <i class="fas fa-plus me-2"></i>
                 Create @yield('title')
@@ -36,24 +36,28 @@
                     <thead>
                         <tr>
                             <th width="1%">No</th>
-                            <th>nama</th>
-                            <th>deskripsi</th>
+                            <th>Hasil Produksi</th>
+                            <th>Interval</th>
+                            <th>Deskripsi</th>
+                            <th>Bobot</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($komoditas as $item)
+                        @foreach ($hasilProduksis as $item)
                             <tr>
-                                <td>{{ ($komoditas->currentPage() - 1) * $komoditas->perPage() + $loop->iteration }}</td>
-                                <td>{{ $item->nama }}</td>
+                                <td>{{ ($hasilProduksis->currentPage() - 1) * $hasilProduksis->perPage() + $loop->iteration }}</td>
+                                <td>{{ $item->hasil_produksi }}</td>
+                                <td>{{ $item->interval }}</td>
                                 <td>{{ Str::limit($item->deskripsi, 20, '...') }}</td>
+                                <td>{{ number_format($item->bobot, 2, ',', '.') }}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="{{ route('backend.komoditas.show', $item->uuid) }}" class="btn btn-sm btn-info">
+                                        <a href="{{ route('backend.hasil-produksi.show', $item->uuid) }}" class="btn btn-sm btn-info">
                                             <i class="fas fa-eye"></i>
                                         </a>
 
-                                        <a href="{{ route('backend.komoditas.edit', $item->uuid) }}"
+                                        <a href="{{ route('backend.hasil-produksi.edit', $item->uuid) }}"
                                             class="btn btn-sm btn-primary">
                                             <i class="fas fa-edit"></i>
                                         </a>
@@ -69,7 +73,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end mt-3">
-                    {{ $komoditas->links() }}
+                    {{ $hasilProduksis->links() }}
                 </div>
             </div>
 
@@ -83,7 +87,7 @@
         {{-- <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script> --}}
         {{-- <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script> --}}
         <script src={{ asset('assets/backend/js/helper.js') }}></script>
-        <script src={{ asset('assets/backend/js/komoditas.js') }}></script>
+        <script src={{ asset('assets/backend/js/hasil-produksi.js') }}></script>
 
         {{-- <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script> --}}
 
