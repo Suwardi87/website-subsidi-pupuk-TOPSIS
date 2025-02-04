@@ -117,6 +117,25 @@ class ProsesController extends Controller
         return response()->json(['message' => 'Data Petani Berhasil Dihapus...']);
     }
 
+    public function verifikasi(Request $request, $uuid)
+    {
+        $data = $request->validate([
+            'verifikasi' => 'required|in:setuju,tolak',
+        ]);
+
+        try {
+            $proses = Proses::where('uuid', $uuid)->firstOrFail();
+            $proses->verifikasi = $data['verifikasi'];
+            $proses->save();
+
+            return response()->json(['message' => 'Status verifikasi berhasil diubah']);
+        } catch (\Exception $error) {
+            return response()->json(['message' => $error->getMessage()], 500);
+        }
+    }
+
+
+
     public function topsis()
     {
         $data = Proses::with('user:id,name', 'komoditas:id,nama,bobot', 'musimTanam:id,nama,bobot')->get();
@@ -193,4 +212,3 @@ class ProsesController extends Controller
         }, $terbobot);
     }
 }
-

@@ -46,7 +46,9 @@
                             <th>Komoditas</th>
                             <th>Musim Tanam</th>
                             <th>Dosis Pemupukan</th>
+                            @if(in_array(Auth::user()->role, ['petugasDinas']))
                             <th>Verifikasi</th>
+                            @endif
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -59,13 +61,15 @@
                                 <td>{{ $item->biaya_produksi}}</td>
                                 <td>{{ $item->hasil_produksi }}</td>
                                 <td>{{ $item->dosis_pemupukan }}</td>
+                                @if(in_array(Auth::user()->role, ['petugasDinas']))
                                 <td>
-                                    @if ($item->verifikasi == 'tolak')
-                                        <span class="badge bg-danger">Ditolak</span>
-                                    @else
-                                        <span class="badge bg-success">Success</span>
-                                    @endif
+                                        @if ($item->verifikasi == 'tolak')
+                                            <button class="btn btn-sm btn-danger" onclick="modalVerifikasi(this)" data-uuid="{{ $item->uuid }}">Ditolak</button>
+                                        @else
+                                            <span class="badge bg-success">Success</span>
+                                        @endif
                                 </td>
+                                @endif  
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('backend.proses.show', $item->uuid) }}" class="btn btn-sm btn-info">
@@ -94,7 +98,7 @@
                 </div>
             </div>
 
-            {{-- @include('backend.order._modal-download') --}}
+            @include('backend.proses._verifikasi')
             @include('backend.home.section._footer')
 
         </div>

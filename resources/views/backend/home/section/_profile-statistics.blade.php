@@ -3,7 +3,7 @@
 </div>
 <div class="page-content">
     <section class="row">
-        <div class="col-12 col-lg-9">
+        <div class="col-12 col-lg-12">
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
                 <div>
                     <div class="card">
@@ -16,7 +16,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Jumlah Petani</h6>
-                                    {{-- <h6 class="font-extrabold mb-0">{{ $petaniCount }}</h6> --}}
+                                    <h6 class="font-extrabold mb-0">{{ $petaniCount }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -32,8 +32,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h6 class="text-muted font-semibold">Komoditas</h6>
-                                    {{-- <h6 class="font-extrabold mb-0">{{ $komoditasCount }}</h6> --}}
+                                    <h6 class="text-muted font-semibold">Kriteria</h6>
+                                    <h6 class="font-extrabold mb-0">4</h6>
                                 </div>
                             </div>
                         </div>
@@ -50,8 +50,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <h6 class="text-muted font-semibold">Dosis Pupuk</h6>
-                                    <h6 class="font-extrabold mb-0">200 kg</h6>
+                                    <h6 class="text-muted font-semibold">Penerima</h6>
+                                    <h6 class="font-extrabold mb-0">2025</h6>
                                 </div>
                             </div>
                         </div>
@@ -65,34 +65,34 @@
                             <h4>Penerima Subsidi Pupuk</h4>
                         </div>
                         <div class="card-body">
-                            <table class="table table-centered table-hover table-nowrap mb-0 rounded">
-                                <thead class="thead-light">
-                                    <tr class="text-center">
-                                        <th class="border-0 rounded-start">No</th>
-                                        <th class="border-0 rounded-start">Nama</th>
-                                        <th class="border-0 rounded-start">Email</th>
-                                        <th class="border-0 rounded-start">Alamat</th>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Alternatif</th>
+                                        <th>Nilai Preferensi</th>
                                     </tr>
                                 </thead>
-                                {{-- <tbody>
-                                    @foreach ($participant_name as $item)
-                                        <tr class="text-center">
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td><div class="avatar avatar-lg">
-                                                <img src="{{ asset('assets/backend') }}/images/faces/4.jpg">
-                                            </div></td>
-                                            <td></td>
-                                            <td></td>
+                                <tbody>
+                                    @if (!empty($top5Alternatives))
+                                        @foreach ($top5Alternatives as $item)
+                                            <tr>
+                                                <td>{{ $item['alternatif'] }}</td>
+                                                <td>{!! $item['nilai_preferensi'] !!}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="2" class="text-center">Data Kosong</td>
                                         </tr>
-                                    @endforeach
-                                </tbody> --}}
+                                    @endif
+                                </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-6 col-lg-3 col-md-6">
+        {{-- <div class="col-6 col-lg-3 col-md-6">
             <div class="card">
                 <div class="card-body px-3 py-4-5">
                     <div class="row">
@@ -108,7 +108,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </section>
 </div>
-

@@ -22,15 +22,24 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('dashboard',[AdminController::class,'index'])->name('admin.index');
-    Route::resource('luas-tanah', LuasTanahController::class)->names('backend.luas-tanah');
-    Route::resource('biaya-produksi', ProduksiController::class)->names('backend.biaya-produksi');
-    Route::resource('hasil-produksi', HasilProduksiController::class)->names('backend.hasil-produksi');
-    Route::resource('dosis-pupuk', DosisPemupukanController::class)->names('backend.dosis-pupuk');
-    Route::resource('proses', ProsesController::class)->names('backend.proses');
-    // Route::delete('/proses/topsis', [ProsesController::class, 'topsis'])->name('backend.proses.topsis');
-    Route::resource('topsis', TopsisController::class)->names('backend.topsis');
+    // Route::group(['middleware' => ['role:admin']], function () {
+        Route::get('dashboard',[AdminController::class,'index'])->name('admin.index');
+        Route::resource('luas-tanah', LuasTanahController::class)->names('backend.luas-tanah');
+        Route::resource('biaya-produksi', ProduksiController::class)->names('backend.biaya-produksi');
+        Route::resource('hasil-produksi', HasilProduksiController::class)->names('backend.hasil-produksi');
+        Route::resource('dosis-pupuk', DosisPemupukanController::class)->names('backend.dosis-pupuk');
+        Route::resource('proses', ProsesController::class)->names('backend.proses');
+        Route::resource('topsis', TopsisController::class)->names('backend.topsis');
+    // });
 
+    // Route::group(['middleware' => ['role:petugasDinas']], function () {
+        Route::resource('proses', ProsesController::class)->names('backend.proses');
+        Route::put('/proses/verifikasi/{uuid}', [ProsesController::class, 'verifikasi'])->name('backend.proses.verifikasi');
+    // });
+
+    // Route::group(['middleware' => ['role:petani']], function () {
+        Route::resource('proses', ProsesController::class)->names('backend.proses');
+    // });
 });
 
 require __DIR__.'/auth.php';

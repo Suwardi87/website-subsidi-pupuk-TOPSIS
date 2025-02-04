@@ -114,7 +114,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <div class="mb-4">
                             <label for="verifikasi">Verifikasi</label>
                             <select name="verifikasi" id="verifikasi" class="form-select @error('verifikasi') is-invalid @enderror">
@@ -127,7 +127,7 @@
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Submit Button -->
                     <div class="col-12">

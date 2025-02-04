@@ -46,7 +46,7 @@
 
         <h1 class="mt-4">Hasil Perhitungan TOPSIS</h1>
 
-        <div class="card">
+        {{-- <div class="card">
             <div class="card-header">
                 <h4>Bobot Kriteria</h4>
             </div>
@@ -70,8 +70,41 @@
             </div>
         </div>
 
-       <hr>
+       <hr> --}}
 
+       <div class="card">
+        <div class="card-header">
+            <h4>Data Petani</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Alternatif</th>
+                        <th>Luas Lahan</th>
+                        <th>Dosis Pemupukan</th>
+                        <th>Biaya Produksi</th>
+                        <th>Hasil Produksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($dataMentah as $item)
+                        <tr>
+                            <td>A{{ $loop->index + 1 }}</td>
+                            <td>{{ $item['luas_lahan'] }}</td>
+                            <td>{{ $item['dosis_pemupukan'] }}</td>
+                            <td>{{ $item['biaya_produksi'] }}</td>
+                            <td>{{ $item['hasil_produksi'] }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+       @if(!in_array(Auth::user()->role, ['petani','petugasDinas']))
         <div class="card">
             <div class="card-header">
                 <h4>Matriks X</h4>
@@ -80,6 +113,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th>Alternatif</th>
                             <th>Luas Lahan</th>
                             <th>Dosis Pemupukan</th>
                             <th>Biaya Produksi</th>
@@ -87,8 +121,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($dataMentah as $item)
+                        @foreach ($matriksX as $item)
                             <tr>
+                                <td>A{{ $loop->index + 1 }}</td>
                                 <td>{{ $item['luas_lahan'] }}</td>
                                 <td>{{ $item['dosis_pemupukan'] }}</td>
                                 <td>{{ $item['biaya_produksi'] }}</td>
@@ -111,6 +146,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th>Alternatif</th>
                             <th>Luas Lahan</th>
                             <th>Dosis Pemupukan</th>
                             <th>Biaya Produksi</th>
@@ -120,8 +156,9 @@
                     <tbody>
                         @foreach ($matriksX as $item)
                             <tr>
+                                <td>A{{ $loop->index + 1 }}</td>
                                 @foreach ($item as $val)
-                                    <td>{{ $val }}</td>
+                                    <td>{{ number_format($val, 2, ',', '.') }}</td>
                                 @endforeach
                             </tr>
                         @endforeach
@@ -140,6 +177,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th>Alternatif</th>
                             <th>Luas Lahan</th>
                             <th>Dosis Pemupukan</th>
                             <th>Biaya Produksi</th>
@@ -147,8 +185,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($normalisasiR as $key => $item)
+                        @foreach ($matriksKeputusan as $key => $item)
                             <tr>
+                                <td>A{{ $loop->index + 1 }}</td>
                                 @foreach ($item as $val)
                                     <td>{{ number_format($val, 4, ',', '.') }}</td>
                                 @endforeach
@@ -168,6 +207,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th>Alternatif</th>
                             <th>Luas Lahan</th>
                             <th>Dosis Pemupukan</th>
                             <th>Biaya Produksi</th>
@@ -177,6 +217,7 @@
                     <tbody>
                         @foreach ($matriksKeputusan as $key => $item)
                             <tr>
+                                <td>A{{ $loop->index + 1 }}</td>
                                 @foreach ($item as $val)
                                     <td>{{ number_format($val, 4, ',', '.') }}</td>
                                 @endforeach
@@ -240,9 +281,9 @@
                     <tbody>
                         @foreach ($distances as $key => $item)
                             <tr>
-                                <td>{{ $item['name'] }}</td>
-                                <td>{{ number_format($item['jarak_a_plus'], 4, ',', '.') }}</td>
-                                <td>{{ number_format($item['jarak_a_minus'], 4, ',', '.') }}</td>
+                                <td>A{{ $loop->index + 1 }}</td>
+                                <td>{{ number_format($item['d_plus'], 4, ',', '.') }}</td>
+                                <td>{{ number_format($item['d_minus'], 4, ',', '.') }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -265,10 +306,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($nilaiPreferensi as $key => $item)
+                        @foreach ($distances as $key => $item)
+                            @php
+                                $total = $item['d_plus'] + $item['d_minus'];
+                                $nilaiPreferensi = $total != 0 ? $item['d_minus'] / $total : 0;
+                            @endphp
                             <tr>
-                                <td>{{ $item['nama'] }}</td>
-                                <td>{{ number_format($item['nilai_preferensi'], 4, ',', '.') }}</td>
+                                <td>A{{ $loop->index + 1 }}</td>
+                                <td><strong>{{ number_format($nilaiPreferensi, 4, ',', '.') }}</strong></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -277,12 +322,44 @@
         </div>
 
         <hr>
+        @endif
+        <hr>
         <div class="card">
+            <div class="card-header">
+                <h4>Ranking 5 Besar Alternatif</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Alternatif</th>
+                            <th>Nilai Preferensi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($top5Alternatives as $item)
+                            <tr>
+                                <td>{{ $item['alternatif'] }}</td>
+                                <td>{!! $item['nilai_preferensi'] !!}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+
+        {{-- <hr> --}}
+        {{-- <div class="card">
             <div class="card-header">
                 <h4>Nilai Preferensi Terbaik</h4>
             </div>
             <div class="card-body">
-                <h5>Nama: {{ $bestAlternative['nama'] }}</h5>
-                <h5>Nilai Preferensi: {{ number_format($bestAlternative['nilai_preferensi'], 4, ',', '.') }}</h5>
+                <h5>Nama: {{ $bestAlternative['name'] ?? 'Unknown' }}</h5>
+                <h5>Nilai Preferensi: {{ number_format($bestAlternative['nilai_preferensi'] ?? 0, 4, ',', '.') }}</h5>
             </div>
-        </div>
+        </div> --}}
+
+    </div>
+</div>
+@endsection

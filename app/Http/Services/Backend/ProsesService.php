@@ -134,8 +134,8 @@ class ProsesService
         };
 
         // Definisi rentang nilai untuk tiap kriteria
-        $rangesLuasLahan = [1.2, 1.5, 2.0, 2.5];
-        $rangesBiayaProduksi = [9000000, 15000000, 22000000, 30000000];
+        $rangesLuasLahan = [1.2, 1.5, 2.0, 2.5,4.5];
+        $rangesBiayaProduksi = [9000000, 15000000, 22000000, 30000000, 40000000];
         $rangesHasilProduksi = [4500, 6000, 7500, 9000];
         $rangesDosisPemupukan = [500, 1000, 1350, 1500];
 

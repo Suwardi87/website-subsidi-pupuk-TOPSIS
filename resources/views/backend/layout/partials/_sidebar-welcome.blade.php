@@ -24,6 +24,7 @@
                 </li>
 
                 @auth
+                @if(!in_array(Auth::user()->role, ['petani']))
                     <li class="sidebar-item has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-folder-fill"></i>
@@ -56,6 +57,7 @@
                             </li>
                         </ul>
                     </li>
+                @endif
 
                     <li class="sidebar-item">
                         <a href="{{ route('backend.proses.index') }}" class='sidebar-link'>
@@ -74,10 +76,13 @@
 
 
                 <li class="sidebar-item  ">
-                    <a href="table-datatable.html" class='sidebar-link'>
+                    <a href="{{ route('logout') }}" class='sidebar-link' onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="bi bi-file-earmark-spreadsheet-fill"></i>
                         <span>Logout</span>
                     </a>
+                    <form action="{{ route('logout') }}" method="POST" style="display: none;" id="logout-form">
+                        @csrf
+                    </form>
                 </li>
 
             </ul>

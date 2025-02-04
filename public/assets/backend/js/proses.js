@@ -106,6 +106,67 @@ $('#formUpdateProses').on('submit', function (e) {
     });
 })
 
+const modalVerifikasi = (e) => {
+    let uuid = e.getAttribute('data-uuid');
+    console.log("UUID:", uuid); // Debugging, cek UUID di console
+
+    $('#verifikasiForm').attr('action', `proses/verifikasi/${uuid}`);
+    $('#uuid').val(uuid); // Pastikan input hidden memiliki nilai UUID
+    $('#modalVerifikasi').modal('show');
+};
+
+$(document).on('submit', '#verifikasiForm', function (e) {
+    e.preventDefault();
+
+    let url = $(this).attr('action');
+    let method = $(this).attr('method');  // Form is set to use the PUT method
+
+    startLoading();
+
+
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Ensure CSRF protection
+        },
+        type: method,
+        url: url,
+        data: $(this).serialize(),
+        success: function (response) {
+            stopLoading();
+            $('#modalVerifikasi').modal('hide'); // Hide the modal
+
+            Swal.fire({
+                icon: 'success',
+                title: "Success!",
+                text: response.message,
+            }).then(result => {
+                if (result.isConfirmed) {
+                    window.location.href = '/admin/proses';
+                }
+            })
+        },
+        error: function (response) {
+            stopLoading();
+            $('#modalVerifikasi').modal('hide'); // Hide the modal on error
+            let errors = response.responseJSON.errors;
+            let message = '';
+
+            if (response.status === 404) {
+                message = 'Tidak ada hasil query untuk model [App\\Models\\Proses].';
+            } else {
+                $.each(errors, function (key, value) {
+                    message += value + '<br>'; // Collect error messages
+                });
+            }
+
+            Swal.fire({
+                icon: 'error',
+                title: 'error',
+                html: message // Display error messages in SweetAlert
+            });
+        }
+    });
+});
 
 // delete data
 const deleteData = (e) => {
@@ -124,6 +185,16 @@ const deleteData = (e) => {
         showCloseButton: true
     }).then((result) => {
         startLoading();
+        Swal.fire({
+            title: "Please wait...",
+            text: "Loading...",
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
 
         if (result.value) {
             $.ajax({
@@ -144,4 +215,3 @@ const deleteData = (e) => {
         }
     })
 }
-
