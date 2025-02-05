@@ -46,7 +46,7 @@
                             <tr>
                                 <td>{{ ($biayaProduksi->currentPage() - 1) * $biayaProduksi->perPage() + $loop->iteration }}</td>
                                 <td>{{ $item->biaya_produksi }}</td>
-                                <td>{{ $item->bobot }}</td>
+                                <td>{{ number_format($item->bobot, 2, ',', '.') }}</td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('backend.biaya-produksi.show', $item->uuid) }}" class="btn btn-sm btn-info">

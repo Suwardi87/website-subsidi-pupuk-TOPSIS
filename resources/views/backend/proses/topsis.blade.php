@@ -82,9 +82,9 @@
                     <tr>
                         <th>Alternatif</th>
                         <th>Luas Lahan</th>
-                        <th>Dosis Pemupukan</th>
                         <th>Biaya Produksi</th>
                         <th>Hasil Produksi</th>
+                        <th>Dosis Pemupukan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,9 +92,9 @@
                         <tr>
                             <td>A{{ $loop->index + 1 }}</td>
                             <td>{{ $item['luas_lahan'] }}</td>
-                            <td>{{ $item['dosis_pemupukan'] }}</td>
                             <td>{{ $item['biaya_produksi'] }}</td>
                             <td>{{ $item['hasil_produksi'] }}</td>
+                            <td>{{ $item['dosis_pemupukan'] }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -102,8 +102,7 @@
         </div>
     </div>
 
-
-
+       <hr>
        @if(!in_array(Auth::user()->role, ['petani','petugasDinas']))
         <div class="card">
             <div class="card-header">
@@ -115,9 +114,9 @@
                         <tr>
                             <th>Alternatif</th>
                             <th>Luas Lahan</th>
-                            <th>Dosis Pemupukan</th>
                             <th>Biaya Produksi</th>
                             <th>Hasil Produksi</th>
+                            <th>Dosis Pemupukan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -125,9 +124,9 @@
                             <tr>
                                 <td>A{{ $loop->index + 1 }}</td>
                                 <td>{{ $item['luas_lahan'] }}</td>
-                                <td>{{ $item['dosis_pemupukan'] }}</td>
-                                <td>{{ $item['biaya_produksi'] }}</td>
                                 <td>{{ $item['hasil_produksi'] }}</td>
+                                <td>{{ $item['biaya_produksi'] }}</td>
+                                <td>{{ $item['dosis_pemupukan'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -139,34 +138,6 @@
         <hr>
 
         <div class="card">
-            <div class="card-header">
-                <h4>Normalisasi Matriks</h4>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Alternatif</th>
-                            <th>Luas Lahan</th>
-                            <th>Dosis Pemupukan</th>
-                            <th>Biaya Produksi</th>
-                            <th>Hasil Produksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($matriksX as $item)
-                            <tr>
-                                <td>A{{ $loop->index + 1 }}</td>
-                                @foreach ($item as $val)
-                                    <td>{{ number_format($val, 2, ',', '.') }}</td>
-                                @endforeach
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
 
         <hr>
         <div class="card">
@@ -179,13 +150,13 @@
                         <tr>
                             <th>Alternatif</th>
                             <th>Luas Lahan</th>
-                            <th>Dosis Pemupukan</th>
                             <th>Biaya Produksi</th>
                             <th>Hasil Produksi</th>
+                            <th>Dosis Pemupukan</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($matriksKeputusan as $key => $item)
+                        @foreach ($normalisasi as $key => $item)
                             <tr>
                                 <td>A{{ $loop->index + 1 }}</td>
                                 @foreach ($item as $val)
@@ -209,17 +180,18 @@
                         <tr>
                             <th>Alternatif</th>
                             <th>Luas Lahan</th>
-                            <th>Dosis Pemupukan</th>
                             <th>Biaya Produksi</th>
                             <th>Hasil Produksi</th>
+                            <th>Dosis Pemupukan</th>
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach ($matriksKeputusan as $key => $item)
                             <tr>
                                 <td>A{{ $loop->index + 1 }}</td>
                                 @foreach ($item as $val)
-                                    <td>{{ number_format($val, 4, ',', '.') }}</td>
+                                    <td>{{ number_format($val * ($bobot[$key] ?? 1), 4, ',', '.') }}</td>
                                 @endforeach
                             </tr>
                         @endforeach
@@ -228,7 +200,6 @@
             </div>
         </div>
 
-        <hr>
         <hr>
         <div class="card">
             <div class="card-header">
@@ -240,9 +211,9 @@
                         <tr>
                             <th></th>
                             <th>Luas Lahan</th>
-                            <th>Dosis Pemupukan</th>
                             <th>Biaya Produksi</th>
                             <th>Hasil Produksi</th>
+                            <th>Dosis Pemupukan</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -261,7 +232,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
 
         <hr>
         <hr>
@@ -293,6 +263,7 @@
 
         <hr>
         <hr>
+
         <div class="card">
             <div class="card-header">
                 <h4>Nilai Preferensi</h4>
@@ -347,7 +318,7 @@
                 </table>
             </div>
         </div>
-        
+        @endsection
 
         {{-- <hr> --}}
         {{-- <div class="card">
@@ -359,7 +330,8 @@
                 <h5>Nilai Preferensi: {{ number_format($bestAlternative['nilai_preferensi'] ?? 0, 4, ',', '.') }}</h5>
             </div>
         </div> --}}
-
+{{--
     </div>
 </div>
-@endsection
+
+

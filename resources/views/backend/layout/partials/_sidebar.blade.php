@@ -2,13 +2,10 @@
 <div id="sidebar" class="active">
     <div class="sidebar-wrapper active">
         <div class="sidebar-header">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-center align-items-center">
                 <div class="logo" >
-                    <a href="{{ route('dashboard') }}"><img src="{{ asset('assets/backend') }}/images/logo/logo.png" class="img-fluid" width=75 height=150 alt="Logo"
+                    <a href="{{ route('dashboard') }}"><img src="{{ asset('assets/backend') }}/images/logo/logo.png" style="width:75px;height:110px;"class="img-fluid" alt="Logo"
                             srcset=""></a>
-                </div>
-                <div class="toggler">
-                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
                 </div>
             </div>
         </div>
