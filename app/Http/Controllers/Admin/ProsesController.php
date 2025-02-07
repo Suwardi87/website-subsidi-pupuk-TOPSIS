@@ -5,12 +5,13 @@ namespace App\Http\Controllers\admin;
 use App\Models\Proses;
 use Illuminate\Http\Request;
 use Matrix\Decomposition\LU;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProsesRequest;
 use App\Http\Services\Backend\ProsesService;
-use App\Http\Services\Backend\HasilProduksiService;
-use App\Http\Services\Backend\LuasTanahService;
 use App\Http\Services\Backend\ProduksiService;
+use App\Http\Services\Backend\LuasTanahService;
+use App\Http\Services\Backend\HasilProduksiService;
 use App\Http\Services\Backend\DosisPemupukanService;
 
 class ProsesController extends Controller
@@ -133,6 +134,19 @@ class ProsesController extends Controller
             return response()->json(['message' => $error->getMessage()], 500);
         }
     }
+
+   
+
+
+    // public function cetak()
+    // {
+    //     $data = Proses::with('user:id,name', 'komoditas:id,nama,bobot', 'musimTanam:id,nama,bobot')->get();
+
+    //     $pdf = Proses::loadView('backend.proses.cetak', ['data' => $data]);
+    //     return $pdf->download('proses.pdf');
+    // }
+
+
 
 
 

@@ -15,6 +15,16 @@
     <div id="main">
 
         @include('backend.home.section._header')
+        <div class="d-flex justify-content-between w-100 flex-wrap">
+            <div class="mb-3 mb-lg-0">
+                <h1 class="h4">@yield('title')</h1>
+                <p class="mb-0">Edit Hasil Produksi - Subsidi Pupuk Dinas Pertanian </p>
+            </div>
+            <div>
+                <a href="{{ route('backend.hasil-produksi.index') }}" class="btn btn-outline-primary"><i
+                        class="fas fa-arrow-left me-1"></i> Back</a>
+            </div>
+        </div>
 
         <div class="py-4">
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -36,119 +46,114 @@
                             href="{{ route('backend.hasil-produksi.create') }}">@yield('title')</a></li>
                 </ol>
             </nav>
-            <div class="d-flex justify-content-between w-100 flex-wrap">
-                <div class="mb-3 mb-lg-0">
-                    <h1 class="h4">@yield('title')</h1>
-                    <p class="mb-0">Edit Hasil Produksi - Subsidi Pupuk Dinas Pertanian </p>
-                </div>
-                <div>
-                    <a href="{{ route('backend.hasil-produksi.index') }}" class="btn btn-outline-primary"><i
-                            class="fas fa-arrow-left me-1"></i> Back</a>
-                </div>
-            </div>
+
         </div>
-
-        <form action="#" id="formUpdateHasilProduksi">
-            @csrf
-            <input type="hidden" id="id" value="{{ $hasilProduksi->uuid }}">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">@yield('title')</h4>
+            </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <!-- Input Hasil Produksi -->
-                        <div class="mb-4">
-                            <label for="hasil_produksi">Hasil Produksi</label>
-                            <select name="hasil_produksi" id="hasil_produksi"
-                                class="form-select @error('hasil_produksi') is-invalid @enderror"
-                                onchange="updateBobot(this.value)">
-                                <option value="" {{ old('hasil_produksi', $hasilProduksi->hasil_produksi) == '' ? 'selected' : '' }}>-- select Hasil Produksi --</option>
-                                <option value="3000 - 4500 kg" {{ old('hasil_produksi', $hasilProduksi->hasil_produksi) == '3000 - 4500 kg' ? 'selected' : '' }}>3000 - 4500 kg</option>
-                                <option value="4501 - 6000 kg" {{ old('hasil_produksi', $hasilProduksi->hasil_produksi) == '4501 - 6000 kg' ? 'selected' : '' }}>4501 - 6000 kg</option>
-                                <option value="6001 - 7500 kg" {{ old('hasil_produksi', $hasilProduksi->hasil_produksi) == '6001 - 7500 kg' ? 'selected' : '' }}>6001 - 7500 kg</option>
-                                <option value="7501 - 9000 kg" {{ old('hasil_produksi', $hasilProduksi->hasil_produksi) == '7501 - 9000 kg' ? 'selected' : '' }}>7501 - 9000 kg</option>
-                                <option value="9001 - 10500 kg" {{ old('hasil_produksi', $hasilProduksi->hasil_produksi) == '9001 - 10500 kg' ? 'selected' : '' }}>9001 - 10500 kg</option>
-                            </select>
-                            @error('hasil_produksi')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
+                <form action="#" id="formUpdateHasilProduksi">
+                    @csrf
+                    <input type="hidden" id="id" value="{{ $hasilProduksi->uuid }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Input Hasil Produksi -->
+                            <div class="mb-4">
+                                <label for="hasil_produksi">Hasil Produksi</label>
+                                <select name="hasil_produksi" id="hasil_produksi"
+                                    class="form-select @error('hasil_produksi') is-invalid @enderror"
+                                    onchange="updateBobot(this.value)">
+                                    <option value="" {{ old('hasil_produksi', $hasilProduksi->hasil_produksi) == '' ? 'selected' : '' }}>-- select Hasil Produksi --</option>
+                                    <option value="3000 - 4500 kg" {{ old('hasil_produksi', $hasilProduksi->hasil_produksi) == '3000 - 4500 kg' ? 'selected' : '' }}>3000 - 4500 kg</option>
+                                    <option value="4501 - 6000 kg" {{ old('hasil_produksi', $hasilProduksi->hasil_produksi) == '4501 - 6000 kg' ? 'selected' : '' }}>4501 - 6000 kg</option>
+                                    <option value="6001 - 7500 kg" {{ old('hasil_produksi', $hasilProduksi->hasil_produksi) == '6001 - 7500 kg' ? 'selected' : '' }}>6001 - 7500 kg</option>
+                                    <option value="7501 - 9000 kg" {{ old('hasil_produksi', $hasilProduksi->hasil_produksi) == '7501 - 9000 kg' ? 'selected' : '' }}>7501 - 9000 kg</option>
+                                    <option value="9001 - 10500 kg" {{ old('hasil_produksi', $hasilProduksi->hasil_produksi) == '9001 - 10500 kg' ? 'selected' : '' }}>9001 - 10500 kg</option>
+                                </select>
+                                @error('hasil_produksi')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <!-- Input Interval -->
-                        <div class="mb-3">
-                            <label for="interval">Interval</label>
-                            <select name="interval" id="interval"
-                                class="form-select @error('interval') is-invalid @enderror" aria-readonly="readonly">
-                                <option value="">-- select interval --</option>
-                                <option value="Sangat Kecil" {{ old('interval', $hasilProduksi->interval) == 'Sangat Kecil' ? 'selected' : '' }}>Sangat Kecil</option>
-                                <option value="Kecil" {{ old('interval', $hasilProduksi->interval) == 'Kecil' ? 'selected' : '' }}>Kecil</option>
-                                <option value="Sedang" {{ old('interval', $hasilProduksi->interval) == 'Sedang' ? 'selected' : '' }}>Sedang</option>
-                                <option value="Besar" {{ old('interval', $hasilProduksi->interval) == 'Besar' ? 'selected' : '' }}>Besar</option>
-                                <option value="Sangat Besar" {{ old('interval', $hasilProduksi->interval) == 'Sangat Besar' ? 'selected' : '' }}>Sangat Besar</option>
-                            </select>
-                            @error('interval')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
+                        <div class="col-md-6">
+                            <!-- Input Interval -->
+                            <div class="mb-3">
+                                <label for="interval">Interval</label>
+                                <select name="interval" id="interval"
+                                    class="form-select @error('interval') is-invalid @enderror" aria-readonly="readonly">
+                                    <option value="">-- select interval --</option>
+                                    <option value="Sangat Kecil" {{ old('interval', $hasilProduksi->interval) == 'Sangat Kecil' ? 'selected' : '' }}>Sangat Kecil</option>
+                                    <option value="Kecil" {{ old('interval', $hasilProduksi->interval) == 'Kecil' ? 'selected' : '' }}>Kecil</option>
+                                    <option value="Sedang" {{ old('interval', $hasilProduksi->interval) == 'Sedang' ? 'selected' : '' }}>Sedang</option>
+                                    <option value="Besar" {{ old('interval', $hasilProduksi->interval) == 'Besar' ? 'selected' : '' }}>Besar</option>
+                                    <option value="Sangat Besar" {{ old('interval', $hasilProduksi->interval) == 'Sangat Besar' ? 'selected' : '' }}>Sangat Besar</option>
+                                </select>
+                                @error('interval')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6">
-                        <!-- Input bobot -->
-                        <div class="mb-4">
-                            <label for="bobot">bobot</label>
-                            <select name="bobot" id="bobot" class="form-select @error('bobot') is-invalid @enderror"
-                                aria-readonly="readonly">
-                                <option value="">-- select bobot --</option>
-                                @for ($i = 1; $i <= 5; $i++)
-                                    <option value="{{ $i }}" {{ old('bobot', $hasilProduksi->bobot) == $i ? 'selected' : '' }}>{{ $i }}</option>
-                                @endfor
-                            </select>
-                            @error('bobot')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
+                        <div class="col-md-6">
+                            <!-- Input bobot -->
+                            <div class="mb-4">
+                                <label for="bobot">bobot</label>
+                                <select name="bobot" id="bobot" class="form-select @error('bobot') is-invalid @enderror"
+                                    aria-readonly="readonly">
+                                    <option value="">-- select bobot --</option>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <option value="{{ $i }}" {{ old('bobot', $hasilProduksi->bobot) == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                    @endfor
+                                </select>
+                                @error('bobot')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Input Deskripsi -->
+                            <div class="mb-4">
+                                <label for="deskripsi">Deskripsi</label>
+                                <textarea name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror"
+                                    rows="4">{{ old('deskripsi', $hasilProduksi->deskripsi) }}</textarea>
+                                @error('deskripsi')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <!-- Input Deskripsi -->
-                        <div class="mb-4">
-                            <label for="deskripsi">Deskripsi</label>
-                            <textarea name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror"
-                                rows="4">{{ old('deskripsi', $hasilProduksi->deskripsi) }}</textarea>
-                            @error('deskripsi')
-                            <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-                <script>
-                    function updateBobot(hasilProduksi) {
-                            const bobotSelect = document.getElementById('bobot');
-                            const intervalSelect = document.getElementById('interval');
+                    <script>
+                        function updateBobot(hasilProduksi) {
+                                const bobotSelect = document.getElementById('bobot');
+                                const intervalSelect = document.getElementById('interval');
 
-                            if (hasilProduksi === '3000 - 4500 kg') {
-                                bobotSelect.value = '1';
-                                intervalSelect.value = 'Sangat Kecil';
-                            } else if (hasilProduksi === '4501 - 6000 kg') {
-                                bobotSelect.value = '2';
-                                intervalSelect.value = 'Kecil';
-                            } else if (hasilProduksi === '6001 - 7500 kg') {
-                                bobotSelect.value = '3';
-                                intervalSelect.value = 'Sedang';
-                            } else if (hasilProduksi === '7501 - 9000 kg') {
-                                bobotSelect.value = '4';
-                                intervalSelect.value = 'Besar';
-                            } else if (hasilProduksi === '9001 - 10500 kg') {
-                                bobotSelect.value = '5';
-                                intervalSelect.value = 'Sangat Besar';
+                                if (hasilProduksi === '3000 - 4500 kg') {
+                                    bobotSelect.value = '1';
+                                    intervalSelect.value = 'Sangat Kecil';
+                                } else if (hasilProduksi === '4501 - 6000 kg') {
+                                    bobotSelect.value = '2';
+                                    intervalSelect.value = 'Kecil';
+                                } else if (hasilProduksi === '6001 - 7500 kg') {
+                                    bobotSelect.value = '3';
+                                    intervalSelect.value = 'Sedang';
+                                } else if (hasilProduksi === '7501 - 9000 kg') {
+                                    bobotSelect.value = '4';
+                                    intervalSelect.value = 'Besar';
+                                } else if (hasilProduksi === '9001 - 10500 kg') {
+                                    bobotSelect.value = '5';
+                                    intervalSelect.value = 'Sangat Besar';
+                                }
                             }
-                        }
-                </script>
+                    </script>
+                </form>
             </div>
-
-            <div class="float-end">
-                <a href="{{ route('backend.hasil-produksi.index') }}" class="btn btn-secondary">Back</a>
-                <button type="submit" class="btn btn-primary btnSubmit">Submit</button>
+            <div class="card-footer">
+                <div class="float-end">
+                    <a href="{{ route('backend.hasil-produksi.index') }}" class="btn btn-secondary">Back</a>
+                    <button type="submit" class="btn btn-primary btnSubmit">Submit</button>
+                </div>
             </div>
-        </form>
 
     </div>
 @endsection

@@ -60,21 +60,22 @@ class AdminController extends Controller
     private function getBobot()
     {
         return [
-            'luas_lahan' => (float) DB::table('luas_tanahs')->latest()->value('bobot') ?: 0.0,
-            'dosis_pemupukan' => (float) DB::table('dosis_pemupukans')->latest()->value('bobot') ?: 0.0,
-            'biaya_produksi' => (float) DB::table('biaya_produksis')->latest()->value('bobot') ?: 0.0,
-            'hasil_produksi' => (float) DB::table('hasil_produksis')->latest()->value('bobot') ?: 0.0,
+            'luas_lahan' => 0.4,
+            'biaya_produksi' => 0.3,
+            'hasil_produksi' => 0.2,
+            'dosis_pemupukan' => 0.1,
         ];
     }
+
 
     private function DataMentah($data)
     {
         return $data->map(function ($item) {
             return [
                 'luas_lahan' => (float) $item->luas_lahan . ' ha',
-                'dosis_pemupukan' => (float) $item->dosis_pemupukan . ' kg',
                 'biaya_produksi' => 'Rp. ' . number_format((float) $item->biaya_produksi, 0, ',', '.'),
-                'hasil_produksi' => (float) $item->hasil_produksi . ' kg'
+                'hasil_produksi' => (float) $item->hasil_produksi . ' kg',
+                'dosis_pemupukan' => (float) $item->dosis_pemupukan . ' kg',
             ];
         })->toArray();
     }
@@ -84,33 +85,49 @@ class AdminController extends Controller
         return $data->map(function ($item) {
             return [
                 'luas_lahan' => (float) $item->luasTanah->bobot,
-                'dosis_pemupukan' => (float) $item->dosisPemupukan->bobot,
-                'biaya_produksi' => (float) $item->biayaProduksi->bobot,
                 'hasil_produksi' => (float) $item->hasilProduksi->bobot,
+                'biaya_produksi' => (float) $item->biayaProduksi->bobot,
+                'dosis_pemupukan' => (float) $item->dosisPemupukan->bobot,
             ];
         })->toArray();
     }
 
-    
+
 
     private function normalizeMatriks($matriksX, $bobot)
     {
         $squaredSums = [];
+
+        // Menghitung akar kuadrat dari jumlah kuadrat untuk setiap kriteria
         foreach ($matriksX[0] as $key => $value) {
-            $squaredSums[$key] = sqrt(array_sum(array_column($matriksX, $key))) * $bobot[$key];
+            $squaredSums[$key] = sqrt(array_sum(array_map(fn($val) => $val ** 2, array_column($matriksX, $key))));
         }
 
+        // Normalisasi matriks dengan membagi nilai tiap elemen dengan akar jumlah kuadratnya
         return array_map(function ($item) use ($squaredSums) {
             return array_map(fn($val, $key) => $val / ($squaredSums[$key] ?: 1), $item, array_keys($item));
         }, $matriksX);
     }
 
-    private function generateMatriksKeputusan($normalisasi, $bobot)
+
+    private function generateMatriksKeputusan($normalisasi)
     {
-        return array_map(function ($item) use ($bobot) {
-            return array_map(fn($val, $key) => $val * ($bobot[$key] ?? 1), $item, array_keys($item));
-        }, $normalisasi);
+        $bobot = $this->getBobot();
+
+        // Pecah bobot jadi array kolom per indeks
+        $weightedColumns = array_map(null, ...array_values($normalisasi));
+
+        $weightedMatriks = array_map(function ($column, $index) use ($bobot) {
+            return array_map(fn($val) => $val * ($bobot[$index] ?? 1), $column);
+        }, $weightedColumns, array_keys($bobot));
+        return array_map(null, ...$weightedMatriks);
     }
+
+
+
+
+
+
 
     private function calculateIdealSolutions($matriksKeputusan)
     {
@@ -148,10 +165,14 @@ class AdminController extends Controller
 
     private function getTop5Alternatives($preferenceValues)
     {
+        if (!is_array($preferenceValues)) {
+            throw new \InvalidArgumentException('Error: preferenceValues harus berupa array.');
+        }
         arsort($preferenceValues);
-        return array_slice(array_map(function ($value, $index) {
+        $top5Alternatives = array_slice(array_map(function ($value, $index) {
             return ['alternatif' => 'A' . ($index + 1), 'nilai_preferensi' => number_format($value, 4)];
         }, $preferenceValues, array_keys($preferenceValues)), 0, 5);
+        return $top5Alternatives;
     }
 }
 

@@ -15,6 +15,16 @@
     <div id="main">
 
         @include('backend.home.section._header')
+        <div class="d-flex justify-content-between w-100 flex-wrap">
+            <div class="mb-3 mb-lg-0">
+                <h1 class="h4">@yield('title')</h1>
+                <p class="mb-0">Edit Biaya Produksi - Subsidi Pupuk Dinas Pertanian </p>
+            </div>
+            <div>
+                <a href="{{ route('backend.biaya-produksi.index') }}" class="btn btn-outline-primary"><i
+                        class="fas fa-arrow-left me-1"></i> Back</a>
+            </div>
+        </div>
 
         <div class="py-4">
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -36,16 +46,7 @@
                             href="{{ route('backend.biaya-produksi.edit', $biayaProduksi->id) }}">@yield('title')</a></li>
                 </ol>
             </nav>
-            <div class="d-flex justify-content-between w-100 flex-wrap">
-                <div class="mb-3 mb-lg-0">
-                    <h1 class="h4">@yield('title')</h1>
-                    <p class="mb-0">Edit Biaya Produksi - Subsidi Pupuk Dinas Pertanian </p>
-                </div>
-                <div>
-                    <a href="{{ route('backend.biaya-produksi.index') }}" class="btn btn-outline-primary"><i
-                            class="fas fa-arrow-left me-1"></i> Back</a>
-                </div>
-            </div>
+
         </div>
 
         <div class="card">

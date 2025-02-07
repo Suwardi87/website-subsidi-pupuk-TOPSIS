@@ -1,6 +1,6 @@
 @extends('backend.layout.main')
 
-@section('title', 'Detail Luas Tanah')
+@section('title', 'Detail Luas Lahan')
 
 @push('css')
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendors/apexcharts/apexcharts.css">
@@ -60,7 +60,7 @@
                         <td>{{ $luasTanah->interval }}</td>
                     </tr>
                     <tr>
-                        <th>Lokasi Lahan</th>
+                        <th>Bobot</th>
                         <td>{{ number_format($luasTanah->bobot, 2, ',', '.') }}</td>
                     </tr>
                 </table>

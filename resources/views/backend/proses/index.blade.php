@@ -43,8 +43,8 @@
                             <th width="1%">No</th>
                             <th>Nama</th>
                             <th>Luas Lahan</th>
-                            <th>Komoditas</th>
-                            <th>Musim Tanam</th>
+                            <th>Biya Produksi</th>
+                            <th>Hasil Produksi</th>
                             <th>Dosis Pemupukan</th>
                             @if(in_array(Auth::user()->role, ['petugasDinas']))
                             <th>Verifikasi</th>
@@ -56,7 +56,8 @@
                         @foreach ($proses as $item)
                             <tr>
                                 <td>{{ ($proses->currentPage() - 1) * $proses->perPage() + $loop->iteration }}</td>
-                                <td>{{ $item->user->name }}</td>
+                                {{-- <td>{{ $item->user->name }}</td> --}}
+                                <td>A{{ $loop->index + 1 }}</td>
                                 <td>{{ $item->luas_lahan }}</td>
                                 <td>{{ $item->biaya_produksi}}</td>
                                 <td>{{ $item->hasil_produksi }}</td>
@@ -69,7 +70,7 @@
                                             <span class="badge bg-success">Success</span>
                                         @endif
                                 </td>
-                                @endif  
+                                @endif
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ route('backend.proses.show', $item->uuid) }}" class="btn btn-sm btn-info">

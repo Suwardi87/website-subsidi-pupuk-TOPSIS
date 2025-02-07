@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Proses;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -26,13 +27,25 @@ class TopsisController extends Controller
         $distances = $this->calculateDistances($matriksKeputusan, $solusiIdeal);
         $preferenceValues = $this->calculatePreferenceValues($distances);
         $bestAlternative = $this->determineBestAlternative($preferenceValues);
+        $top35Alternatives = $this->getTop35Alternatives($preferenceValues);
         $top5Alternatives = $this->getTop5Alternatives($preferenceValues);
 
         return view('backend.proses.topsis', compact(
-            'data', 'bobot','dataMentah', 'matriksX', 'normalisasi', 'matriksKeputusan',
-            'solusiIdeal', 'distances', 'preferenceValues', 'bestAlternative', 'top5Alternatives'
+            'data',
+            'bobot',
+            'dataMentah',
+            'matriksX',
+            'normalisasi',
+            'matriksKeputusan',
+            'solusiIdeal',
+            'distances',
+            'preferenceValues',
+            'bestAlternative',
+            'top35Alternatives',
+            'top5Alternatives'
         ));
     }
+
 
     // private function getBobot()
     // {
@@ -71,8 +84,8 @@ class TopsisController extends Controller
         return $data->map(function ($item) {
             return [
                 'luas_lahan' => (float) $item->luasTanah->bobot,
-                'hasil_produksi' => (float) $item->hasilProduksi->bobot,
                 'biaya_produksi' => (float) $item->biayaProduksi->bobot,
+                'hasil_produksi' => (float) $item->hasilProduksi->bobot,
                 'dosis_pemupukan' => (float) $item->dosisPemupukan->bobot,
             ];
         })->toArray();
@@ -149,6 +162,14 @@ private function generateMatriksKeputusan($normalisasi)
         return ['alternatif' => 'A' . ($index + 1), 'nilai_preferensi' => number_format($maxValue, 4)];
     }
 
+    private function getTop35Alternatives($preferenceValues)
+    {
+        arsort($preferenceValues);
+        return array_slice(array_map(function ($value, $index) {
+            return ['alternatif' => 'A' . ($index + 1), 'nilai_preferensi' => number_format($value, 4)];
+        }, $preferenceValues, array_keys($preferenceValues)), 0, 35);
+    }
+
     private function getTop5Alternatives($preferenceValues)
     {
         arsort($preferenceValues);
@@ -156,5 +177,32 @@ private function generateMatriksKeputusan($normalisasi)
             return ['alternatif' => 'A' . ($index + 1), 'nilai_preferensi' => number_format($value, 4)];
         }, $preferenceValues, array_keys($preferenceValues)), 0, 5);
     }
-}
 
+    public function cetakPDF()
+    {
+        $data = Proses::with(['user:id,name', 'luasTanah', 'BiayaProduksi', 'HasilProduksi', 'DosisPemupukan'])->get();
+
+        if ($data->isEmpty()) {
+            return view('backend.proses.topsis', ['message' => 'Data not found']);
+        }
+
+        $bobot = $this->getBobot();
+        //Data Mentah
+        $dataMentah = $this->DataMentah($data);
+        $matriksX = $this->generateMatriksX($data);
+        $normalisasi = $this->normalizeMatriks($matriksX, $bobot);
+        $matriksKeputusan = $this->generateMatriksKeputusan($normalisasi, $bobot);
+        $solusiIdeal = $this->calculateIdealSolutions($matriksKeputusan);
+        $distances = $this->calculateDistances($matriksKeputusan, $solusiIdeal);
+
+        $preferenceValues = $this->calculatePreferenceValues($distances); // Pastikan variabel ini ada
+        // Ambil Top 5 Alternatif langsung
+        $top5Alternatives = $this->getTop5Alternatives($preferenceValues);
+
+        // Debugging (pastikan nilainya benar sebelum cetak PDF)
+
+        // Load tampilan PDF dan cetak
+        $pdf = Pdf::loadView('backend.proses.cetak', compact('top5Alternatives'));
+        return $pdf->download('laporan.pdf');
+    }
+}

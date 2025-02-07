@@ -124,8 +124,8 @@
                             <tr>
                                 <td>A{{ $loop->index + 1 }}</td>
                                 <td>{{ $item['luas_lahan'] }}</td>
-                                <td>{{ $item['hasil_produksi'] }}</td>
                                 <td>{{ $item['biaya_produksi'] }}</td>
+                                <td>{{ $item['hasil_produksi'] }}</td>
                                 <td>{{ $item['dosis_pemupukan'] }}</td>
                             </tr>
                         @endforeach
@@ -172,7 +172,7 @@
         <hr>
         <div class="card">
             <div class="card-header">
-                <h4>Matriks Keputusan</h4>
+                <h4>Normalisasi Y</h4>
             </div>
             <div class="card-body">
                 <table class="table table-bordered">
@@ -237,15 +237,15 @@
         <hr>
         <div class="card">
             <div class="card-header">
-                <h4>Hasil Perhitungan</h4>
+                <h4>Nilai Separasi</h4>
             </div>
             <div class="card-body">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Nama</th>
-                            <th>Jarak A+</th>
-                            <th>Jarak A-</th>
+                            <th>D +</th>
+                            <th>D -</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -298,8 +298,46 @@
         <div class="card">
             <div class="card-header">
                 <h4>Ranking 5 Besar Alternatif</h4>
+            @if(!in_array(Auth::user()->role, ['petani']))
+                <div class="float-end">
+                    {{-- <a href="{{ route('backend.proses.cetak', $preferenceValues) }}" class="btn btn-primary" target="_blank"><i class="fas fa-print"></i> Cetak</a> --}}
+                </div>
             </div>
+            @endif
             <div class="card-body">
+                {{-- <a href="{{ route('backend.proses.cetak') }}" class="btn btn-primary" target="_blank"><i class="fas fa-print"></i> Cetak</a> --}}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>Alternatif</th>
+                            <th>Nilai Preferensi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($top35Alternatives as $key => $item)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td>{{ $item['alternatif'] }}</td>
+                                <td>{!! $item['nilai_preferensi'] !!}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="card">
+            <div class="card-header">
+                <h4>Ranking 5 Besar Alternatif</h4>
+            @if(!in_array(Auth::user()->role, ['petani']))
+                <div class="float-end">
+                    <a href="{{ route('backend.proses.cetak', $preferenceValues) }}" class="btn btn-primary" target="_blank"><i class="fas fa-print"></i> Cetak</a>
+                </div>
+            </div>
+            @endif
+            <div class="card-body">
+                {{-- <a href="{{ route('backend.proses.cetak') }}" class="btn btn-primary" target="_blank"><i class="fas fa-print"></i> Cetak</a> --}}
                 <table class="table table-bordered">
                     <thead>
                         <tr>

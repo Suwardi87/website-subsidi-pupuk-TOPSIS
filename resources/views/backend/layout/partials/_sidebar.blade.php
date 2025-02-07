@@ -30,7 +30,7 @@
                             <li class="submenu-item">
                                 <a href="{{ route('backend.luas-tanah.index') }}">
                                     <i class="bi bi-clipboard-data-fill"></i>
-                                    <span>luas Tanah</span>
+                                    <span>luas Lahan</span>
                                 </a>
                             </li>
                             <li class="submenu-item">

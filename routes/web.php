@@ -30,6 +30,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         Route::resource('dosis-pupuk', DosisPemupukanController::class)->names('backend.dosis-pupuk');
         Route::resource('proses', ProsesController::class)->names('backend.proses');
         Route::resource('topsis', TopsisController::class)->names('backend.topsis');
+        Route::get('cetak/{preferenceValues}', [TopsisController::class, 'cetakPDF'])->name('backend.proses.cetak');
     // });
 
     // Route::group(['middleware' => ['role:petugasDinas']], function () {
