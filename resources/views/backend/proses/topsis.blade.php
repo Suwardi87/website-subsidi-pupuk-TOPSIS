@@ -291,13 +291,13 @@
                 </table>
             </div>
         </div>
-
+        
         <hr>
         @endif
         <hr>
         <div class="card">
             <div class="card-header">
-                <h4>Ranking 5 Besar Alternatif</h4>
+                <h4>Ranking  Alternatif</h4>
             @if(!in_array(Auth::user()->role, ['petani']))
                 <div class="float-end">
                     {{-- <a href="{{ route('backend.proses.cetak', $preferenceValues) }}" class="btn btn-primary" target="_blank"><i class="fas fa-print"></i> Cetak</a> --}}

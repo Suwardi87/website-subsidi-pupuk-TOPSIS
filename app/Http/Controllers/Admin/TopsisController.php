@@ -180,6 +180,7 @@ private function generateMatriksKeputusan($normalisasi)
 
     public function cetakPDF()
     {
+
         $data = Proses::with(['user:id,name', 'luasTanah', 'BiayaProduksi', 'HasilProduksi', 'DosisPemupukan'])->get();
 
         if ($data->isEmpty()) {
@@ -202,7 +203,8 @@ private function generateMatriksKeputusan($normalisasi)
         // Debugging (pastikan nilainya benar sebelum cetak PDF)
 
         // Load tampilan PDF dan cetak
-        $pdf = Pdf::loadView('backend.proses.cetak', compact('top5Alternatives'));
+        $logo = public_path('storage/logo.png'); // Akses gambar di direktori public/storage
+        $pdf = Pdf::loadView('backend.proses.cetak', compact('top5Alternatives', 'logo'));
         return $pdf->download('laporan.pdf');
     }
 }
